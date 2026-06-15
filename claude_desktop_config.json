@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "nelaia": {
+      "command": "C:\\work\\nelaia\\products\\nelaia-mcp\\target\\release\\nelaia-mcp.exe",
+      "args": [],
+      "env": {
+        "NELAIA_COMPILER": "C:\\work\\nelaia\\products\\nelaia-core\\target\\release\\nelaia-c.exe"
+      }
+    }
+  }
+}

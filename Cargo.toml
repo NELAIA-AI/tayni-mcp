@@ -1,0 +1,19 @@
+[package]
+name = "nelaia-mcp"
+version = "0.1.0"
+edition = "2021"
+description = "MCP Server for NELAIA compiler - enables AI agents to compile NELAIA code"
+license = "MIT"
+repository = "https://github.com/nelaia/nelaia-mcp"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1", features = ["full", "io-std"] }
+base64 = "0.22"
+tempfile = "3"
+thiserror = "2"
+
+[[bin]]
+name = "nelaia-mcp"
+path = "src/main.rs"

@@ -188,7 +188,7 @@ impl ToolHandler {
             Err(e) => return ToolCallResult::error(format!("Failed to create temp dir: {}", e)),
         };
 
-        let source_path = temp_dir.path().join("input.nel");
+        let source_path = temp_dir.path().join("input.nela");
         let output_path = temp_dir.path().join("output");
 
         if let Err(e) = std::fs::File::create(&source_path)
@@ -198,10 +198,10 @@ impl ToolHandler {
         }
 
         let target_flag = match args.target.as_str() {
-            "windows" => "--target-windows",
-            "linux" => "--target-linux",
-            "macos" => "--target-macos",
-            "macos-arm64" => "--target-macos-arm64",
+            "windows" => "--emit-pe",
+            "linux" => "--emit-elf",
+            "macos" => "--emit-macho",
+            "macos-arm64" => "--emit-macho-arm64",
             _ => return ToolCallResult::error(format!("Invalid target: {}", args.target)),
         };
 
@@ -253,10 +253,20 @@ impl ToolHandler {
             );
         }
 
-        let binary = match std::fs::read(&output_path) {
+        // Determine the actual output file path (compiler may add extension)
+        let actual_output_path = match args.target.as_str() {
+            "windows" => temp_dir.path().join("output.exe"),
+            _ => output_path.clone(),
+        };
+
+        let binary = match std::fs::read(&actual_output_path) {
             Ok(b) => b,
             Err(e) => {
-                return ToolCallResult::error(format!("Failed to read compiled binary: {}", e))
+                // Try without extension as fallback
+                match std::fs::read(&output_path) {
+                    Ok(b) => b,
+                    Err(_) => return ToolCallResult::error(format!("Failed to read compiled binary: {}", e))
+                }
             }
         };
 
@@ -298,7 +308,7 @@ impl ToolHandler {
             Err(e) => return ToolCallResult::error(format!("Failed to create temp dir: {}", e)),
         };
 
-        let source_path = temp_dir.path().join("input.nel");
+        let source_path = temp_dir.path().join("input.nela");
 
         if let Err(e) = std::fs::File::create(&source_path)
             .and_then(|mut f| f.write_all(args.source.as_bytes()))

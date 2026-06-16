@@ -188,7 +188,7 @@ impl ToolHandler {
             Err(e) => return ToolCallResult::error(format!("Failed to create temp dir: {}", e)),
         };
 
-        let source_path = temp_dir.path().join("input.tayni");
+        let source_path = temp_dir.path().join("input.tyn");
         let output_path = temp_dir.path().join("output");
 
         if let Err(e) = std::fs::File::create(&source_path)
@@ -308,7 +308,7 @@ impl ToolHandler {
             Err(e) => return ToolCallResult::error(format!("Failed to create temp dir: {}", e)),
         };
 
-        let source_path = temp_dir.path().join("input.tayni");
+        let source_path = temp_dir.path().join("input.tyn");
 
         if let Err(e) = std::fs::File::create(&source_path)
             .and_then(|mut f| f.write_all(args.source.as_bytes()))

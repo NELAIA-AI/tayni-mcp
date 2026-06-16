@@ -1,10 +1,10 @@
 [package]
-name = "nelaia-mcp"
+name = "tayni-mcp"
 version = "0.1.0"
 edition = "2021"
-description = "MCP Server for NELAIA compiler - enables AI agents to compile NELAIA code"
+description = "MCP Server for TAYNI compiler - enables AI agents to compile TAYNI code"
 license = "MIT"
-repository = "https://github.com/nelaia/nelaia-mcp"
+repository = "https://github.com/NELAIA-AI/tayni-mcp"
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
@@ -15,5 +15,5 @@ tempfile = "3"
 thiserror = "2"
 
 [[bin]]
-name = "nelaia-mcp"
+name = "tayni-mcp"
 path = "src/main.rs"

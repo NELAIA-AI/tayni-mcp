@@ -1,22 +1,22 @@
-# NELAIA MCP Server
+# TAYNI MCP Server
 
-MCP (Model Context Protocol) server that enables AI agents to compile NELAIA code to native executables.
+MCP (Model Context Protocol) server that enables AI agents to compile TAYNI code to native executables.
 
 ## Installation
 
 ### From Source
 
 ```bash
-cd nelaia-mcp
+cd TAYNI-mcp
 cargo build --release
 ```
 
-The binary will be at `target/release/nelaia-mcp` (or `nelaia-mcp.exe` on Windows).
+The binary will be at `target/release/TAYNI-mcp` (or `TAYNI-mcp.exe` on Windows).
 
 ### Prerequisites
 
-- The `nelaia-c` compiler must be installed and available in PATH
-- Or set the `NELAIA_COMPILER` environment variable to the compiler path
+- The `TAYNI-c` compiler must be installed and available in PATH
+- Or set the `TAYNI_COMPILER` environment variable to the compiler path
 
 ## Usage with Claude Desktop
 
@@ -25,8 +25,8 @@ Add to your Claude Desktop configuration (`claude_desktop_config.json`):
 ```json
 {
   "mcpServers": {
-    "nelaia": {
-      "command": "nelaia-mcp",
+    "TAYNI": {
+      "command": "TAYNI-mcp",
       "args": []
     }
   }
@@ -38,11 +38,11 @@ Or with a custom compiler path:
 ```json
 {
   "mcpServers": {
-    "nelaia": {
-      "command": "nelaia-mcp",
+    "TAYNI": {
+      "command": "TAYNI-mcp",
       "args": [],
       "env": {
-        "NELAIA_COMPILER": "/path/to/nelaia-c"
+        "TAYNI_COMPILER": "/path/to/TAYNI-c"
       }
     }
   }
@@ -51,12 +51,12 @@ Or with a custom compiler path:
 
 ## Available Tools
 
-### `nelaia_compile`
+### `TAYNI_compile`
 
-Compile NELAIA source code to a native executable.
+Compile TAYNI source code to a native executable.
 
 **Input:**
-- `source` (string, required): NELAIA source code
+- `source` (string, required): TAYNI source code
 - `target` (string, optional): Target platform - `windows`, `linux`, `macos`, `macos-arm64` (default: `linux`)
 - `output_format` (string, optional): Output format - `base64` (default: `base64`)
 
@@ -71,12 +71,12 @@ Compile NELAIA source code to a native executable.
 }
 ```
 
-### `nelaia_check`
+### `TAYNI_check`
 
-Check NELAIA source code syntax without compiling.
+Check TAYNI source code syntax without compiling.
 
 **Input:**
-- `source` (string, required): NELAIA source code to check
+- `source` (string, required): TAYNI source code to check
 
 **Output:**
 ```json
@@ -88,18 +88,18 @@ Check NELAIA source code syntax without compiling.
 }
 ```
 
-### `nelaia_info`
+### `TAYNI_info`
 
-Get information about NELAIA language and compiler.
+Get information about TAYNI language and compiler.
 
 **Input:**
 - `query` (string, required): One of `version`, `operators`, `capabilities`, `grammar`, `examples`
 
 **Output:** Structured information based on query type.
 
-### `nelaia_example`
+### `TAYNI_example`
 
-Get example NELAIA code for a specific task.
+Get example TAYNI code for a specific task.
 
 **Input:**
 - `task` (string, required): Description of what the program should do
@@ -130,13 +130,13 @@ The server communicates via JSON-RPC 2.0 over stdin/stdout, following the MCP sp
 
 ```bash
 # Start the server
-echo '{"jsonrpc":"2.0","method":"initialize","params":{},"id":1}' | nelaia-mcp
+echo '{"jsonrpc":"2.0","method":"initialize","params":{},"id":1}' | TAYNI-mcp
 
 # List tools
-echo '{"jsonrpc":"2.0","method":"tools/list","params":{},"id":2}' | nelaia-mcp
+echo '{"jsonrpc":"2.0","method":"tools/list","params":{},"id":2}' | TAYNI-mcp
 
 # Compile code
-echo '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"nelaia_compile","arguments":{"source":".msg: \"Hi\"\\n.out: PRT .msg 2"}},"id":3}' | nelaia-mcp
+echo '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"TAYNI_compile","arguments":{"source":".msg: \"Hi\"\\n.out: PRT .msg 2"}},"id":3}' | TAYNI-mcp
 ```
 
 ## Development

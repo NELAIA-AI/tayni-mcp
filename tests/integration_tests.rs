@@ -1,4 +1,4 @@
-//! Tests for NELAIA MCP Server
+//! Tests for TAYNI MCP Server
 
 #[path = "../src/protocol.rs"]
 mod protocol;
@@ -33,7 +33,7 @@ fn test_initialize() {
     assert!(response.get("result").is_some());
     let result = response.get("result").unwrap();
     assert_eq!(result["protocolVersion"], "2024-11-05");
-    assert_eq!(result["serverInfo"]["name"], "nelaia-mcp");
+    assert_eq!(result["serverInfo"]["name"], "TAYNI-mcp");
 }
 
 #[test]
@@ -51,18 +51,18 @@ fn test_tools_list() {
         .map(|t| t["name"].as_str().unwrap())
         .collect();
 
-    assert!(tool_names.contains(&"nelaia_compile"));
-    assert!(tool_names.contains(&"nelaia_check"));
-    assert!(tool_names.contains(&"nelaia_info"));
-    assert!(tool_names.contains(&"nelaia_example"));
+    assert!(tool_names.contains(&"TAYNI_compile"));
+    assert!(tool_names.contains(&"TAYNI_check"));
+    assert!(tool_names.contains(&"TAYNI_info"));
+    assert!(tool_names.contains(&"TAYNI_example"));
 }
 
 #[test]
-fn test_nelaia_info_version() {
+fn test_TAYNI_info_version() {
     let response = common::send_request(
         "tools/call",
         json!({
-            "name": "nelaia_info",
+            "name": "TAYNI_info",
             "arguments": {
                 "query": "version"
             }
@@ -78,11 +78,11 @@ fn test_nelaia_info_version() {
 }
 
 #[test]
-fn test_nelaia_info_operators() {
+fn test_TAYNI_info_operators() {
     let response = common::send_request(
         "tools/call",
         json!({
-            "name": "nelaia_info",
+            "name": "TAYNI_info",
             "arguments": {
                 "query": "operators"
             }
@@ -99,11 +99,11 @@ fn test_nelaia_info_operators() {
 }
 
 #[test]
-fn test_nelaia_example_hello_world() {
+fn test_TAYNI_example_hello_world() {
     let response = common::send_request(
         "tools/call",
         json!({
-            "name": "nelaia_example",
+            "name": "TAYNI_example",
             "arguments": {
                 "task": "print hello world"
             }
@@ -123,11 +123,11 @@ fn test_nelaia_example_hello_world() {
 }
 
 #[test]
-fn test_nelaia_example_add_numbers() {
+fn test_TAYNI_example_add_numbers() {
     let response = common::send_request(
         "tools/call",
         json!({
-            "name": "nelaia_example",
+            "name": "TAYNI_example",
             "arguments": {
                 "task": "add two numbers"
             }

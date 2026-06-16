@@ -1,4 +1,4 @@
-//! MCP Tool implementations for NELAIA
+//! MCP Tool implementations for TAYNI
 
 use crate::protocol::{
     InitializeResult, JsonRpcRequest, JsonRpcResponse, McpError, ServerCapabilities, ServerInfo,
@@ -21,9 +21,9 @@ pub struct ToolHandler {
 
 impl ToolHandler {
     pub fn new() -> Self {
-        let compiler_path = std::env::var("NELAIA_COMPILER")
+        let compiler_path = std::env::var("TAYNI_COMPILER")
             .map(PathBuf::from)
-            .unwrap_or_else(|_| PathBuf::from("nelaia-c"));
+            .unwrap_or_else(|_| PathBuf::from("TAYNI-c"));
 
         Self { compiler_path }
     }
@@ -48,7 +48,7 @@ impl ToolHandler {
                 },
             },
             server_info: ServerInfo {
-                name: "nelaia-mcp".to_string(),
+                name: "TAYNI-mcp".to_string(),
                 version: VERSION.to_string(),
             },
         };
@@ -58,14 +58,14 @@ impl ToolHandler {
     fn handle_tools_list(&self, id: Value) -> JsonRpcResponse {
         let tools = vec![
             ToolDefinition {
-                name: "nelaia_compile".to_string(),
-                description: "Compile NELAIA source code to a native executable binary".to_string(),
+                name: "TAYNI_compile".to_string(),
+                description: "Compile TAYNI source code to a native executable binary".to_string(),
                 input_schema: json!({
                     "type": "object",
                     "properties": {
                         "source": {
                             "type": "string",
-                            "description": "NELAIA source code to compile"
+                            "description": "TAYNI source code to compile"
                         },
                         "target": {
                             "type": "string",
@@ -84,22 +84,22 @@ impl ToolHandler {
                 }),
             },
             ToolDefinition {
-                name: "nelaia_check".to_string(),
-                description: "Check NELAIA source code syntax without compiling".to_string(),
+                name: "TAYNI_check".to_string(),
+                description: "Check TAYNI source code syntax without compiling".to_string(),
                 input_schema: json!({
                     "type": "object",
                     "properties": {
                         "source": {
                             "type": "string",
-                            "description": "NELAIA source code to check"
+                            "description": "TAYNI source code to check"
                         }
                     },
                     "required": ["source"]
                 }),
             },
             ToolDefinition {
-                name: "nelaia_info".to_string(),
-                description: "Get information about NELAIA language and compiler".to_string(),
+                name: "TAYNI_info".to_string(),
+                description: "Get information about TAYNI language and compiler".to_string(),
                 input_schema: json!({
                     "type": "object",
                     "properties": {
@@ -113,8 +113,8 @@ impl ToolHandler {
                 }),
             },
             ToolDefinition {
-                name: "nelaia_example".to_string(),
-                description: "Get example NELAIA code for a specific task".to_string(),
+                name: "TAYNI_example".to_string(),
+                description: "Get example TAYNI code for a specific task".to_string(),
                 input_schema: json!({
                     "type": "object",
                     "properties": {
@@ -150,10 +150,10 @@ impl ToolHandler {
         };
 
         let result = match params.name.as_str() {
-            "nelaia_compile" => self.tool_compile(params.arguments),
-            "nelaia_check" => self.tool_check(params.arguments),
-            "nelaia_info" => self.tool_info(params.arguments),
-            "nelaia_example" => self.tool_example(params.arguments),
+            "TAYNI_compile" => self.tool_compile(params.arguments),
+            "TAYNI_check" => self.tool_check(params.arguments),
+            "TAYNI_info" => self.tool_info(params.arguments),
+            "TAYNI_example" => self.tool_example(params.arguments),
             _ => ToolCallResult::error(format!("Unknown tool: {}", params.name)),
         };
 
@@ -188,7 +188,7 @@ impl ToolHandler {
             Err(e) => return ToolCallResult::error(format!("Failed to create temp dir: {}", e)),
         };
 
-        let source_path = temp_dir.path().join("input.nela");
+        let source_path = temp_dir.path().join("input.tayni");
         let output_path = temp_dir.path().join("output");
 
         if let Err(e) = std::fs::File::create(&source_path)
@@ -308,7 +308,7 @@ impl ToolHandler {
             Err(e) => return ToolCallResult::error(format!("Failed to create temp dir: {}", e)),
         };
 
-        let source_path = temp_dir.path().join("input.nela");
+        let source_path = temp_dir.path().join("input.tayni");
 
         if let Err(e) = std::fs::File::create(&source_path)
             .and_then(|mut f| f.write_all(args.source.as_bytes()))
@@ -552,7 +552,7 @@ impl ToolHandler {
 .modelen: 1
 .fd: FOP .filename .fnamelen .mode .modelen
 
-.content: "Hello from NELAIA!\n"
+.content: "Hello from TAYNI!\n"
 .contentlen: 20
 .written: FWR .fd .content .contentlen
 
@@ -596,8 +596,8 @@ impl ToolHandler {
             )
         } else {
             (
-                r#"# Basic NELAIA program template
-.msg: "NELAIA Program\n"
+                r#"# Basic TAYNI program template
+.msg: "TAYNI Program\n"
 .len: 15
 .out: PRT .msg .len
 

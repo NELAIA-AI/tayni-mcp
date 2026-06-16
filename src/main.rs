@@ -1,6 +1,6 @@
-//! NELAIA MCP Server
+//! TAYNI MCP Server
 //!
-//! Model Context Protocol server that enables AI agents to compile NELAIA code.
+//! Model Context Protocol server that enables AI agents to compile TAYNI code.
 //! Communicates via JSON-RPC over stdin/stdout.
 
 pub mod protocol;
